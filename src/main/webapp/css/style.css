@@ -1,0 +1,174 @@
+/* aboutpage */
+div#aboutpage
+{
+  color: #ADACB5;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+ul#aboutpagecontributors
+{
+  color: #ffffff;
+  opacity: 0;
+  animation: fade 4s forwards;
+  animation-delay: 2s;
+}
+ul#aboutpagetasks
+{
+  color: #ffffff;
+  opacity: 0;
+  animation: fade 4s forwards;
+  animation-delay: 4s;
+}
+h3#aboutpageh3-2
+{
+  top: 25px;
+  color: #D8D5DB;
+  opacity: 0;
+  animation: fade 4s forwards;
+  animation-delay: 4s;
+}
+
+
+/* index page */
+h1#index-title
+{
+  color:#ADACB5;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+
+/* homepage */
+div#homepage
+{
+  color:#ADACB5;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20%;
+  align-items: center;
+  justify-content: center;
+  /* centering */
+}
+
+
+
+
+
+
+/* animations */
+@keyframes fade
+{
+  0%{opacity: 0}
+  100%{opacity: 1;}
+  /*takes opacity from 0 and gradients it to 1*/
+}
+
+
+
+
+
+
+
+
+/* headfoot */
+header
+{
+  font-size: larger;
+  position: fixed;
+  top: 0;
+  padding: 10px;
+  animation: fade 2s;
+}
+
+footer
+{
+  color: #5f668b;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  text-align: center;
+  animation: fade 2s;
+}
+
+
+
+
+/* webpage formatting */
+body {
+  font-family: 'Chivo';
+  background-image: url("../img/papyrus-dark.png");
+  /* Source: https://www.toptal.com/designers/subtlepatterns/uploads/papyrus-dark.png */
+}
+
+h1
+{
+  margin: 0;
+  animation: fade 2s;
+}
+
+h3
+{
+  top: 25px;
+  color: #D8D5DB;
+  opacity: 0;
+  animation: fade 4s forwards;
+  animation-delay: 2s;
+}
+
+table, th, td
+{
+  border: 1px solid black;
+  border-collapse: separate;
+}
+
+
+
+
+/* navbar */
+div#navbar
+{
+  height: 20px;
+  display: table;
+  float: left;
+  margin: 0 auto;
+}
+
+li#navli
+{
+  display: inline;
+}
+
+li#navli a
+{
+  color: #5f668b;
+  padding: 5px;
+  text-decoration: none;
+}
+
+li#navli a:hover
+{
+  color: #ADACB5;
+}
+
+
+
+
+
+/* scrollbar */
+::-webkit-scrollbar
+{
+  background: #43385a5d;
+  border: none;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #7A6F9B;
+  border: none;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a09ccc;
+}
