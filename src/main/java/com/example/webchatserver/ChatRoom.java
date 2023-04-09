@@ -12,7 +12,11 @@ import java.util.Map;
 public class ChatRoom {
     private String  code;
 
-    //each user has an unique ID associate to their ws session and their username
+    //stores each message in the server
+    private List<String> chatHistory = new ArrayList<>();
+
+
+    //each user has a unique ID associate to their ws session and their username
     private Map<String, String> users = new HashMap<String, String>() ;
 
     // when created the chat room has at least one user
@@ -33,6 +37,7 @@ public class ChatRoom {
         return users;
     }
 
+    public List<String> getChatHistory() {return chatHistory;}
     /**
      * This method will add the new userID to the room if not exists, or it will add a new userID,name pair
      * **/
