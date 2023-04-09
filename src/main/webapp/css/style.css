@@ -7,6 +7,10 @@ h1#index-title
   margin-top: 5%;
   margin-left: 5%;
 }
+body#chat-body
+{
+  padding-top: 5%;
+}
 
 /* room list chatroom page */
 div#index
