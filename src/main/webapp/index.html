@@ -31,15 +31,40 @@
 <h1 id="index-title">Chat Rooms</h1>
 
 
-</div>
 
 
+  <div id = "list-of-chat-rooms">
+    <p>Open Rooms</p>
+    <ul id="room-list">
+      <li id="room">A4BC1</li>
+      <li id="room">7HJS9</li>
+      <li id="room">XYZ12</li>
+      <li id="room">VMAS2</li>
+      <li id="room">VS232</li>
+      <li id="room">XASFG</li>
+      <li id="room">XSFAS</li>
+    </ul>  
 
-  
+    <button id="create-room" onclick="newRoom()">Create and Join New Room</button>
+
+    <div id="room-select">
+      <input id="room-code">
+      <button id="join-room" onclick="joinRoom()">Join</button>
+    </div>
 
 
+    <div id="current-room-text">
+      <h3 id="room-id-literal"></h3>
+    </div>
+  </div>
 
 
+  <div id="chat">
+    <div>
+      <textarea title="Chat Log" id="log" readonly></textarea>
+      <input title="Chat Input" id="input" type="text" autofocus/>
+    </div>
+  </div>
 
 
 

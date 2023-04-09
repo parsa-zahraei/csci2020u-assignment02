@@ -1,3 +1,107 @@
+/* chatroom page */
+h1#index-title
+{
+  color:#ADACB5;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+
+/* room list chatroom page */
+div#index
+{
+
+}
+
+ul#room-list
+{
+  list-style: none;
+  /* no bullet points */
+}
+
+li#room a
+{
+  color: #5f668b;
+}
+
+li#room a:hover
+{
+  color: #ADACB5;
+}
+
+div#list-of-chat-rooms
+{
+  color:#D8D5DB;
+  margin-left: 5%;
+  display: inline-flex;
+  /* this will display everything within the boundaries of the div relatively, and flex them */
+  flex-direction: column;
+}
+
+button
+{
+  background-color: #49475a;
+  color: #b5acbd;
+  border-radius: 7px;
+}
+
+button:hover
+{
+  color: #e3d9ec;
+  transition-duration: .2s;
+}
+
+input
+{
+  background-color: #49475a;
+  color: #b5acbd;
+  border-radius: 7px;
+  
+}
+
+div#current-room-text
+{
+  display: inline-flex;
+}
+
+/* individual chatrooms */
+div#chat
+{
+  padding-left: 5%;
+  display: inline-flex;  
+  width: 70%;
+}
+textarea#log
+{
+  display: block;
+  height: 600px; 
+  margin: 0; 
+  padding: 0; 
+  border: 0;
+  background-color: #cbcbcf8a;
+  border-radius: 7px;
+
+  width: 1100px;
+  /* for now I will manually set width, cannot fill div another way for some reason */
+}
+input#input
+{
+  display: block; 
+  width: 100%; 
+  border-width: 1px 0 1px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
 /* aboutpage */
 div#aboutpage
 {
@@ -30,16 +134,6 @@ h3#aboutpageh3-2
   animation-delay: 4s;
 }
 
-
-/* index page */
-h1#index-title
-{
-  color:#ADACB5;
-  display: flex;
-  flex-direction: column;
-  margin-top: 5%;
-  margin-left: 5%;
-}
 
 /* homepage */
 div#homepage
@@ -103,13 +197,13 @@ body {
   /* Source: https://www.toptal.com/designers/subtlepatterns/uploads/papyrus-dark.png */
 }
 
-h1
+
+h1#homeabout
 {
   margin: 0;
   animation: fade 2s;
 }
-
-h3
+h3#homeabout
 {
   top: 25px;
   color: #D8D5DB;
@@ -118,11 +212,7 @@ h3
   animation-delay: 2s;
 }
 
-table, th, td
-{
-  border: 1px solid black;
-  border-collapse: separate;
-}
+
 
 
 
@@ -160,15 +250,13 @@ li#navli a:hover
 /* scrollbar */
 ::-webkit-scrollbar
 {
-  background: #43385a5d;
+  background: #464a5a;
   border: none;
-  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #7A6F9B;
+  background: #62607a;
   border: none;
-  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a09ccc;
+  background: #D8D5DB;
 }
