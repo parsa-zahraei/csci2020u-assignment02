@@ -85,7 +85,7 @@ textarea#log
   border: 0;
   background-color: #cbcbcf8a;
   border-radius: 7px;
-
+  color: #5e6aa7;
   width: 1100px;
   /* for now I will manually set width, cannot fill div another way for some reason */
 }
