@@ -42,7 +42,7 @@ public class ChatServer {
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
 
-        if (roomID == "lnkFsPN05v186yks")
+        if (roomID.equals("lnkFsPN05v186yks"))
         {
             updateList(session);
         }

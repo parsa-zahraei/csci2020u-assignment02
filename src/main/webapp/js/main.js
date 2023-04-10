@@ -35,6 +35,8 @@ document.getElementById("input").addEventListener("keyup", function (event) {
 
 function refreshList(){
 
+   //debugger;
+
     let code = 'lnkFsPN05v186yks';
 
     // create the web socket
@@ -43,31 +45,37 @@ function refreshList(){
     // parse messages received from the server and update the UI accordingly
     ws.onmessage = function (event) {
 
-        debugger;
+        //debugger;
 
         console.log(event.data);
         // parsing the server's message as json
         let message = JSON.parse(event.data);
 
-        updateRoomList(code);
+        updateRoomList(message.message);
 
     }
+
 
 }
 
 function updateRoomList(code){
 
-    //debugger;
+    debugger;
 
     let roomList = document.getElementById('room-list')
 
-    if (!(codeList.includes(code)))
+    let codeSplit = code.split(" ");
+
+    if (codeSplit.length == 1)
     {
-        codeList.push(code);
+        if (!(codeList.includes(code)))
+        {
+            codeList.push(code);
 
-        let newRoom = '<li id=' + code + '>' + code + '</li>';
+            let newRoom = '<li id=' + code + '>' + code + '</li>';
 
-        roomList.insertAdjacentHTML('afterend', newRoom);
+            roomList.insertAdjacentHTML('afterend', newRoom);
+        }
     }
 
 }
