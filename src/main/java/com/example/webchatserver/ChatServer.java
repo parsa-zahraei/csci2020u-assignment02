@@ -26,9 +26,7 @@ public class ChatServer {
     // Instance of chatRoom that represents the current room that the user is in
     static ChatRoom currentRoom;
 
-
-    // you may add other attributes as you see fit
-
+    //Update client's list of available rooms
     private void updateList(Session session) throws IOException {
         for (ChatRoom room: rooms)
         {
@@ -42,13 +40,17 @@ public class ChatServer {
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
 
+        //The string "lnkFsPN05v186yks" is key that indicates that the client's list of rooms should be refreshed, rather
+        //than a new chatRoom be created
         if (roomID.equals("lnkFsPN05v186yks"))
         {
             updateList(session);
         }
+        //Without the key, create a new chatRoom
         else
         {
 
+            //Broadcast the creation of a new chatRoom
             for (Session peer: session.getOpenSessions())
             {
                 String roomString = String.format("{\"type\": \"chat\", \"message\":\"%s lnkFsPN05v186yks\"}",roomID);
@@ -61,6 +63,7 @@ public class ChatServer {
 
             boolean newRoom = true;
 
+            //Date Time Format Data
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime localTime = LocalTime.now();
 
@@ -83,6 +86,7 @@ public class ChatServer {
                 }
             }
 
+            //Add a new room to the list of exisitng rooms
             if (newRoom)
             {
                 currentRoom = new ChatRoom(roomID, userID);
@@ -94,6 +98,7 @@ public class ChatServer {
 
             String initMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s](Server %s): Please state your username to begin.\"}",dtf.format(localTime),roomID);
 
+            //Send initial message to client
             session.getBasicRemote().sendText(initMessage);
 
 //        accessing the roomID parameter
@@ -104,14 +109,18 @@ public class ChatServer {
 
     @OnClose
     public void close(Session session) throws IOException, EncodeException {
+
+        //Get session ID
         String userId = session.getId();
 
         String userName = currentRoom.getUsers().get(userId);
         // do things for when the connection closes
 
+        //Date time format data
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime localTime = LocalTime.now();
 
+        //Broadcast that user has left the server
         String broadMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): %s left the room\"}",dtf.format(localTime), currentRoom.getCode(), userName);
 
         currentRoom.getChatHistory().add(broadMessage);
@@ -120,11 +129,12 @@ public class ChatServer {
         {
             if ((peer.getId() != userId ) && (currentRoom.getUsers().get(peer.getId()) != null))
             {
-                currentRoom.removeUser(peer.getId());
                 peer.getBasicRemote().sendText(broadMessage);
             }
         }
 
+        //Remove user from current room
+        currentRoom.removeUser(userId);
 
     }
 
@@ -201,8 +211,6 @@ public class ChatServer {
                 }
             }
         }
-
-
 
 
 
