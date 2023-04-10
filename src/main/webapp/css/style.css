@@ -13,9 +13,9 @@ body#chat-body
 }
 
 /* room list chatroom page */
-div#index
+button#refresh
 {
-
+  margin: 20px;
 }
 
 ul#room-list
