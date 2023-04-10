@@ -3,6 +3,8 @@ package com.example.webchatserver;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
@@ -27,47 +29,76 @@ public class ChatServer {
 
     // you may add other attributes as you see fit
 
+    private void updateList(Session session) throws IOException {
+        for (ChatRoom room: rooms)
+        {
+            String existRoomString = String.format("{\"type\": \"chat\", \"message\":\"%s\"}",room.getCode());
+
+            session.getBasicRemote().sendText(existRoomString);
+
+        }
+    }
 
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
 
-        String userID = session.getId();
-
-        boolean newRoom = true;
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime localTime = LocalTime.now();
-
-        //check if room exists
-        for (ChatRoom room: rooms)
+        if (roomID == "lnkFsPN05v186yks")
         {
-            if (roomID.equals(room.getCode()))
+            updateList(session);
+        }
+        else
+        {
+
+            for (Session peer: session.getOpenSessions())
             {
-                newRoom = false;
+                String roomString = String.format("{\"type\": \"chat\", \"message\":\"%s lnkFsPN05v186yks\"}",roomID);
 
-                currentRoom = room;
-
-                currentRoom.setUserName(userID, "");
-
+                peer.getBasicRemote().sendText(roomString);
             }
-        }
-
-        if (newRoom)
-        {
-            currentRoom = new ChatRoom(roomID, userID);
-
-            rooms.add(currentRoom);
-
-            //currentRoom.getChatHistory().add(String.format("{\"type\": \"chat\", \"message\":\"[%s] Room %s created:",dtf.format(localTime), roomID));
-        }
 
 
-        String initMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s](Server %s): Please state your username to begin.\"}",dtf.format(localTime),roomID);
+            String userID = session.getId();
 
-        session.getBasicRemote().sendText(initMessage);
+            boolean newRoom = true;
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalTime localTime = LocalTime.now();
+
+            //check if room exists
+            for (ChatRoom room: rooms)
+            {
+                if (roomID.equals(room.getCode()))
+                {
+                    newRoom = false;
+
+                    currentRoom = room;
+
+                    //Check if previous user is reconnecting
+                    if (currentRoom.getUsers().get(userID) != null)
+                    {
+                        currentRoom.removeUser(userID);
+                    }
+
+                    currentRoom.setUserName(userID, "");
+                }
+            }
+
+            if (newRoom)
+            {
+                currentRoom = new ChatRoom(roomID, userID);
+
+                rooms.add(currentRoom);
+
+                //currentRoom.getChatHistory().add(String.format("{\"type\": \"chat\", \"message\":\"[%s] Room %s created:",dtf.format(localTime), roomID));
+            }
+
+            String initMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s](Server %s): Please state your username to begin.\"}",dtf.format(localTime),roomID);
+
+            session.getBasicRemote().sendText(initMessage);
 
 //        accessing the roomID parameter
-        System.out.println(roomID);
+            System.out.println(roomID);
+        }
 
     }
 
@@ -126,15 +157,16 @@ public class ChatServer {
             currentRoom.setUserName(userId, message);
 
             String welcomeMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): Welcome %s\"}",dtf.format(localTime), currentRoom.getCode(), message);
-            String historyMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): Here is the chat history\"}",dtf.format(localTime), currentRoom.getCode());
+
             broadMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): %s joined the server\"}",dtf.format(localTime), currentRoom.getCode(), message);
 
 
             session.getBasicRemote().sendText(welcomeMessage);
-            session.getBasicRemote().sendText(historyMessage);
 
             if (currentRoom.getUsers().size() > 1)
             {
+                String historyMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): Here is the chat history\"}",dtf.format(localTime), currentRoom.getCode());
+                session.getBasicRemote().sendText(historyMessage);
                 for (String record: currentRoom.getChatHistory())
                 {
                     session.getBasicRemote().sendText(record);
@@ -169,6 +201,8 @@ public class ChatServer {
                 }
             }
         }
+
+
 
 
 

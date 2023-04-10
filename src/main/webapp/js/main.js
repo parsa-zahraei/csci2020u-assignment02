@@ -1,5 +1,7 @@
 let ws;
 
+let codeList = []
+
 function newRoom(){
     //debugger;
     // calling the ChatServlet to retrieve a new room ID
@@ -15,7 +17,9 @@ function newRoom(){
 }
 
 function joinRoom(){
-    let code = document.getElementById("room-code").value;
+    let code = document.getElementById('room-code').value;
+
+    code += '\r\n'
 
     enterRoom(code);
 
@@ -29,9 +33,51 @@ document.getElementById("input").addEventListener("keyup", function (event) {
     }
 });
 
+function refreshList(){
+
+    let code = 'lnkFsPN05v186yks';
+
+    // create the web socket
+    ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/" + code);
+
+    // parse messages received from the server and update the UI accordingly
+    ws.onmessage = function (event) {
+
+        debugger;
+
+        console.log(event.data);
+        // parsing the server's message as json
+        let message = JSON.parse(event.data);
+
+        updateRoomList(code);
+
+    }
+
+}
+
+function updateRoomList(code){
+
+    //debugger;
+
+    let roomList = document.getElementById('room-list')
+
+    if (!(codeList.includes(code)))
+    {
+        codeList.push(code);
+
+        let newRoom = '<li id=' + code + '>' + code + '</li>';
+
+        roomList.insertAdjacentHTML('afterend', newRoom);
+    }
+
+}
+
 function enterRoom(code){
 
+    document.getElementById("log").value = "";
+
     // refresh the list of rooms
+    //updateRoomList(code);
 
     // create the web socket
     ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/"+code);
@@ -40,12 +86,35 @@ function enterRoom(code){
 
     // parse messages received from the server and update the UI accordingly
     ws.onmessage = function (event) {
+
+        debugger;
+
         console.log(event.data);
         // parsing the server's message as json
         let message = JSON.parse(event.data);
 
-        // handle message
-        document.getElementById("log").value += message.message + "\n";
+        let splitMessage = message.message.split(" ");
+
+        if (splitMessage.length == 2)
+        {
+            if (splitMessage[1] == 'lnkFsPN05v186yks')
+            {
+                updateRoomList(splitMessage[0]);
+            }
+            else
+            {
+                // handle message
+                document.getElementById("log").value += message.message + "\n";
+            }
+
+        }
+        else
+        {
+            // handle message
+            document.getElementById("log").value += message.message + "\n";
+        }
+
+
     }
 }
 
