@@ -19,7 +19,7 @@ Figure 1. Chat server first client room intialization screenshot.
 &nbsp;
 
 ![Client 2](./src/main/webapp/img/client2.jpg)
-Figure 1. Chat server secondary client room join screenshot.
+Figure 2. Chat server secondary client room join screenshot.
   
 
 These figures show the multi-client interaction on a single chat server where client 1 joins and speaks, and client 2 sees this room when they refresh their open rooms list, joins, sees the chats history and responds.
