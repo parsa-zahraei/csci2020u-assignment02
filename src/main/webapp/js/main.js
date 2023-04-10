@@ -25,6 +25,7 @@ function joinRoom(){
 
 }
 
+//Allow client to send messages to other's in same room
 document.getElementById("input").addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
         let request = {"type":"chat", "msg":event.target.value};
@@ -33,6 +34,7 @@ document.getElementById("input").addEventListener("keyup", function (event) {
     }
 });
 
+//Refresh the list of available rooms for a client
 function refreshList(){
 
    //debugger;
@@ -58,9 +60,10 @@ function refreshList(){
 
 }
 
+//Update individual elements of the room list
 function updateRoomList(code){
 
-    debugger;
+    //debugger;
 
     let roomList = document.getElementById('room-list')
 
@@ -103,6 +106,8 @@ function enterRoom(code){
 
         let splitMessage = message.message.split(" ");
 
+
+        //If the message contains "lnkFsPN05v186yks", broadcast creation of new room to all clients
         if (splitMessage.length == 2)
         {
             if (splitMessage[1] == 'lnkFsPN05v186yks')

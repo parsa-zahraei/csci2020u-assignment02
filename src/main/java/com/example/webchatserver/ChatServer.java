@@ -76,12 +76,6 @@ public class ChatServer {
 
                     currentRoom = room;
 
-                    //Check if previous user is reconnecting
-                    if (currentRoom.getUsers().get(userID) != null)
-                    {
-                        currentRoom.removeUser(userID);
-                    }
-
                     currentRoom.setUserName(userID, "");
                 }
             }
@@ -150,6 +144,7 @@ public class ChatServer {
 
         String broadMessage;
 
+        //Date Format Data
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime localTime = LocalTime.now();
 
@@ -160,6 +155,7 @@ public class ChatServer {
             System.out.println("Trigger");
         }
 
+        //If the user is unitialized
         if (currentRoom.getUsers().get(userId).equals(""))
         {
             firstMessage = true;
@@ -170,9 +166,10 @@ public class ChatServer {
 
             broadMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): %s joined the server\"}",dtf.format(localTime), currentRoom.getCode(), message);
 
-
+            //Send welcome message to user
             session.getBasicRemote().sendText(welcomeMessage);
 
+            //Show history of chat to new user
             if (currentRoom.getUsers().size() > 1)
             {
                 String historyMessage = String.format("{\"type\": \"chat\", \"message\":\"[%s] (Server %s): Here is the chat history\"}",dtf.format(localTime), currentRoom.getCode());
@@ -191,6 +188,7 @@ public class ChatServer {
 
         currentRoom.getChatHistory().add(broadMessage);
 
+        //Broadcast appropiate messages to client's in the same room
         if (firstMessage)
         {
             for (Session peer: session.getOpenSessions())
